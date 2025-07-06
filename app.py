@@ -41,14 +41,14 @@ if not is_ollama_running():
     st.stop() # Stop app execution if Ollama is not running
 
 # Model selection
-available_models = ["gemma3n"] # Default model
+available_models = ["gemma3n:latest"] # Default model
 try:
     ollama_models = ollama.list()['models']
     for model_info in ollama_models:
         if model_info['model'] not in available_models:
             available_models.append(model_info['model'])
 except Exception:
-    st.sidebar.warning("无法获取 Ollama 模型列表。请确保 Ollama 正在运行。")
+    st.sidebar.warning("无法连接到 Ollama 服务或获取模型列表。请确保 Ollama 正在运行。")
 
 selected_model = st.sidebar.selectbox("选择模型", available_models)
 
@@ -58,7 +58,7 @@ if selected_model not in [m['model'] for m in ollama.list()['models']]:
 
 
 # Temperature slider for model response creativity
-temperature = st.sidebar.slider("生成温度 (Temperature)", 0.0, 2.0, 0.7, 0.05,
+temperature = st.sidebar.slider("生成温度 (Temperature)", 0.0, 1.0, 0.7, 0.05,
                                 help="较高的值会使输出更随机，较低的值会使输出更集中和确定。")
 
 # Clear chat history button
@@ -96,7 +96,7 @@ if "vectorstore" not in st.session_state:
     try:
         st.session_state.embeddings = OllamaEmbeddings(model="nomic-embed-text")
         # Check if nomic-embed-text is actually pulled
-        if "nomic-embed-text" not in [m['model'] for m in ollama.list()['models']]:
+        if "nomic-embed-text:latest" not in [m['model'] for m in ollama.list()['models']]:
             st.warning("❗ 嵌入模型 `nomic-embed-text` 尚未下载。请在命令行中运行 `ollama pull nomic-embed-text`。")
             st.session_state.embeddings = None # Disable RAG if embedder is not ready
         else:
@@ -223,7 +223,7 @@ st.sidebar.info("💡 这是一个完全离线的应用。所有数据处理都�
 with st.sidebar.expander("关于 & 帮助"):
     st.markdown("""
     **版本:** 1.0.0
-    **作者:** [您的名字/团队名]
+    **作者:** [seveNine]
     **简介:** 这是一个完全离线的本地智慧助手，利用 Ollama 平台运行 Gemma 3n 大语言模型，旨在为无网络或弱网络环境的用户提供智能对话和知识检索服务。
 
     **🚀 快速开始：**
@@ -267,46 +267,28 @@ if prompt := st.chat_input("您有什么问题或想了解的？"):
 
     # Display a loading spinner while waiting for response
     with st.chat_message("assistant"):
+        # Create a placeholder for streaming response
         message_placeholder = st.empty()
         full_response = ""
         with st.spinner("思考中... 请稍候片刻，这取决于您的CPU性能"):
             try:
-                # --- RAG Logic: Retrieve context from documents ---
-                context = ""
-                if st.session_state.vectorstore and st.session_state.embeddings:
-                    with st.spinner("正在知识库中检索相关信息..."):
-                        # Retrieve top 4 most relevant chunks
-                        docs = st.session_state.vectorstore.similarity_search(prompt, k=4)
-                        context = "\n".join([doc.page_content for doc in docs])
-                        if context:
-                            st.info("已从知识库中检索到相关信息。")
-                            # print(f"Retrieved Context:\n{context}") # For debugging
-
-                # Prepare messages for Ollama API, including context and dynamic system instruction
-                messages_for_ollama = [
-                    {"role": "system", "content": system_instruction} # Use dynamic system instruction
-                ]
-                if context:
-                    messages_for_ollama.append({"role": "system", "content": f"相关上下文信息:\n{context}"})
-                
-                # Add existing conversation history
-                for m in st.session_state.messages:
-                    # Exclude system messages from previous turns if we are re-injecting them
-                    if m["role"] != "system":
-                        messages_for_ollama.append({"role": m["role"], "content": m["content"]})
-                
-                # Ollama Chat Call
+                # Call Ollama API to get response from selected model
                 stream = ollama.chat(
-                    model=selected_model,
-                    messages=messages_for_ollama,
-                    stream=True,
-                    options=dict(temperature=temperature)
+                    model=selected_model, # Use the selected model from sidebar
+                    messages=[
+                        {"role": m["role"], "content": m["content"]}
+                        for m in st.session_state.messages
+                    ],
+                    stream=True, # Enable streaming responses
+                    options=dict(temperature=temperature) # Apply temperature setting
                 )
 
                 for chunk in stream:
                     if 'content' in chunk['message']:
                         full_response += chunk['message']['content']
+                        # Update the placeholder with the current full response and a blinking cursor
                         message_placeholder.markdown(full_response + "▌")
+                # After streaming is complete, display the final response without the cursor
                 message_placeholder.markdown(full_response)
 
                 # Add assistant message to chat history
@@ -314,6 +296,6 @@ if prompt := st.chat_input("您有什么问题或想了解的？"):
 
             except Exception as e:
                 st.error(f"与模型交互时发生错误: {e}")
-                st.warning("请确保 Ollama 服务正在运行 (在命令行中输入 `ollama serve`) 并且您已下载了您选择的模型 (`ollama pull your_model_name`) 和嵌入模型 (`ollama pull nomic-embed-text`)。")
+                st.warning("请确保 Ollama 服务正在运行 (在命令行中输入 `ollama serve`) 并且您已下载了您选择的模型 (`ollama pull your_model_name`)。")
 
 st.divider() # Another visual separator
