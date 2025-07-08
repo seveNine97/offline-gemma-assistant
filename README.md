@@ -1,66 +1,66 @@
-# 🧠 本地智慧助手：偏远地区离线大模型服务解决方案
+# 🧠 Local Smart Assistant: Offline LLM Solution for Remote Areas
 
-## ✨ 项目简介
+## ✨ Project Introduction
 
-欢迎来到 **本地智慧助手**！这是一个专为解决偏远地区网络基础设施不足问题而设计的大语言模型应用。我们利用 Google 最新的 **Gemma 3n 模型**，并结合 **Ollama 离线服务**，打造了一个完全在本地运行、无需互联网连接的智能问答平台。
+Welcome to **Local Smart Assistant**! This project is a large language model application specifically designed to address the issue of insufficient network infrastructure in remote areas. We leverage Google's latest **Gemma 3n model** combined with **Ollama offline service** to create an intelligent Q&A platform that runs entirely locally, without requiring an internet connection.
 
-我们的目标是让知识触手可及，即使在网络不便的环境下，用户也能通过智能助手获取信息、学习新知，赋能当地社区发展。
+Our goal is to make knowledge accessible, empowering local communities by enabling users to obtain information and learn new things through a smart assistant, even in environments with poor network connectivity.
 
-**为何选择它？**
-- **100% 离线运行**：所有计算都在本地完成，无惧网络中断。
-- **本地知识库增强 (RAG)**：允许用户上传本地文档，模型能基于私有数据回答问题。
-- **多场景助手模式**：内置多种专业模式，满足不同领域（如农业、医疗、教育）的需求。
-- **用户友好界面**：基于 Streamlit 构建，操作直观，易于上手。
+**Why choose it?**
+- **100% Offline Operation**: All computations are performed locally, unaffected by network outages.
+- **Local Knowledge Base Augmentation (RAG)**: Allows users to upload local documents, enabling the model to answer questions based on private data.
+- **Multi-scenario Assistant Modes**: Built-in professional modes for various fields (e.g., agriculture, healthcare, education).
+- **User-friendly Interface**: Built on Streamlit, intuitive and easy to use.
 
-## 🌟 核心亮点与功能
+## 🌟 Key Highlights & Features
 
-*   **离线大模型对话**：
-    *   深度整合 [Ollama](https://ollama.com/) 平台，本地运行 Gemma 3n 模型，提供快速、流畅的对话体验。
-    *   用户可以与模型进行自然语言交互，获取各种问题的答案。
-*   **检索增强生成 (RAG) 知识库**：
-    *   **文档上传**：支持 `TXT`, `MD`, `PDF` 等格式的本地文档上传。
-    *   **智能检索**：应用会将文档内容智能分块、向量化并存储在本地 [ChromaDB](https://www.trychroma.com/) 向量数据库中。
-    *   **上下文增强**：用户提问时，系统会从知识库中检索最相关的文档片段，并作为额外上下文传递给 Gemma 3n 模型，确保回答的准确性和针对性。
-    *   **持久化存储**：知识库数据在应用关闭后依然保留，无需重复上传和处理。
-*   **动态助手模式**：
-    *   侧边栏提供多种预设的助手模式，例如“农业专家”、“基础医疗咨询”、“天气灾害预警”、“基础教育知识”等。
-    *   用户可根据需求切换模式，模型将自动调整其回答风格和侧重点，提供更专业的服务。
-*   **实时用户体验优化**：
-    *   **流式响应**：模型回答以打字机效果逐步显示，提供更自然的交互感。
-    *   **文件处理进度条**：在上传和处理知识文档时，清晰显示进度，避免用户等待焦虑。
-    *   **Ollama 服务与模型状态检查**：智能检测 Ollama 服务是否运行、所需模型是否下载，并提供直观的引导和错误提示。
-*   **简洁直观的 UI**：
-    *   基于 Streamlit 框架构建，界面布局清晰，操作便捷。
-    *   支持调节模型生成温度、清空聊天记录等实用功能。
+*   **Offline Large Language Model Chat**:
+    *   Deeply integrated with the [Ollama](https://ollama.com/) platform, running the Gemma 3n model locally to provide a fast and smooth conversational experience.
+    *   Users can interact with the model in natural language to get answers to various questions.
+*   **Retrieval-Augmented Generation (RAG) Knowledge Base**:
+    *   **Document Upload**: Supports uploading local documents in formats such as `TXT`, `MD`, `PDF`.
+    *   **Intelligent Retrieval**: The application intelligently chunks, vectorizes, and stores document content in a local [ChromaDB](https://www.trychroma.com/) vector database.
+    *   **Context Augmentation**: When a user asks a question, the system retrieves the most relevant document snippets from the knowledge base and passes them as additional context to the Gemma 3n model, ensuring accuracy and relevance of the answers.
+    *   **Persistent Storage**: Knowledge base data persists even after the application is closed, eliminating the need for repeated uploads and processing.
+*   **Dynamic Assistant Modes**:
+    *   The sidebar provides several preset assistant modes, such as "Agricultural Expert," "Basic Medical Consultation," "Weather Disaster Warning," "Basic Education Knowledge," etc.
+    *   Users can switch modes based on their needs, and the model will automatically adjust its answering style and focus to provide more professional services.
+*   **Real-time User Experience Optimization**:
+    *   **Streaming Response**: Model answers are displayed incrementally with a typewriter effect, providing a more natural interaction.
+    *   **File Processing Progress Bar**: Clearly displays progress when uploading and processing knowledge documents, reducing user anxiety during waiting times.
+    *   **Ollama Service and Model Status Check**: Intelligently detects whether the Ollama service is running and if the required models are downloaded, providing intuitive guidance and error prompts.
+*   **Clean and Intuitive UI**:
+    *   Built on the Streamlit framework, with a clear layout and easy operation.
+    *   Supports practical functions such as adjusting model generation temperature and clearing chat history.
 
-## 🛠️ 技术栈
+## 🛠️ Technology Stack
 
-*   **核心框架**：[Python](https://www.python.org/)
-*   **Web 应用框架**：[Streamlit](https://streamlit.io/)
-*   **本地大模型服务**：[Ollama](https://ollama.com/) (运行 Gemma 3n 和 nomic-embed-text)
-*   **LLM 编排与 RAG**：[LangChain](https://www.langchain.com/) (用于文档加载、文本分割、嵌入和向量存储集成)
-*   **向量数据库**：[ChromaDB](https://www.trychroma.com/) (本地嵌入式向量数据库)
-*   **PDF 解析**：[PyPDF](https://pypdf.readthedocs.io/en/stable/)
+*   **Core Framework**: [Python](https://www.python.org/)
+*   **Web Application Framework**: [Streamlit](https://streamlit.io/)
+*   **Local LLM Service**: [Ollama](https://ollama.com/) (running Gemma 3n and nomic-embed-text)
+*   **LLM Orchestration & RAG**: [LangChain](https://www.langchain.com/) (for document loading, text splitting, embedding, and vector store integration)
+*   **Vector Database**: [ChromaDB](https://www.trychroma.com/) (local embedded vector database)
+*   **PDF Parsing**: [PyPDF](https://pypdf.readthedocs.io/en/stable/)
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 前提条件
+### Prerequisites
 
-在运行此项目之前，请确保您的系统满足以下要求：
+Before running this project, please ensure your system meets the following requirements:
 
-1.  **Python 3.8+**：推荐使用 [Anaconda](https://www.anaconda.com/products/individual) 或 [Miniconda](https://docs.conda.io/en/latest/miniconda.html) 进行环境管理。
-2.  **Git**：用于克隆项目仓库。
-3.  **Ollama**：访问 [ollama.com](https://ollama.com/) 下载并安装适用于您操作系统的 Ollama 应用程序。
+1.  **Python 3.8+**: Recommended to use [Anaconda](https://www.anaconda.com/products/individual) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for environment management.
+2.  **Git**: For cloning the project repository.
+3.  **Ollama**: Visit [ollama.com](https://ollama.com/) to download and install the Ollama application for your operating system.
 
-### 安装与运行
+### Installation and Running
 
-1.  **克隆项目仓库：**
+1.  **Clone the project repository:**
     ```bash
-    git clone https://github.com/seveNine97/offline-gemma-assistant.git # 请替换为您的实际仓库名
+    git clone https://github.com/seveNine97/offline-gemma-assistant.git # Please replace with your actual repository name
     cd offline-gemma-assistant
     ```
 
-2.  **创建并激活虚拟环境 (推荐)：**
+2.  **Create and activate a virtual environment (recommended):**
     ```bash
     python -m venv venv
     # Windows:
@@ -69,72 +69,72 @@
     source venv/bin/activate
     ```
 
-3.  **安装 Python 依赖：**
+3.  **Install Python dependencies:**
     ```bash
-    pip install -r requirements.txt # 如果您创建了requirements.txt
-    # 或者手动安装：
-    pip install streamlit ollama langchain langchain-community chromadb pypdf
+    pip install -r requirements.txt # If you created requirements.txt
+    # Or install manually:
+    pip install streamlit ollama langchain langchain-community chromadb pypdf langchain-ollama langchain-chroma
     ```
-    *（建议：在项目根目录运行 `pip freeze > requirements.txt` 生成 `requirements.txt` 文件，方便他人安装。）*
+    *(Suggestion: Run `pip freeze > requirements.txt` in the project root to generate `requirements.txt` for easier installation by others.)*
 
-4.  **启动 Ollama 服务：**
-    在您的命令行中运行以下命令。Ollama 桌面应用通常会自动在后台运行，如果已运行则无需重复执行。
+4.  **Start the Ollama service:**
+    Run the following command in your terminal. The Ollama desktop application usually runs automatically in the background; if it's already running, no need to repeat.
     ```bash
     ollama serve
     ```
 
-5.  **下载大语言模型和嵌入模型：**
-    这两个模型需要一次性下载，之后即可离线使用。
+5.  **Download the large language model and embedding model:**
+    These two models need to be downloaded once, after which they can be used offline.
     ```bash
     ollama pull gemma3n
     ollama pull nomic-embed-text
     ```
 
-6.  **运行本地智慧助手应用：**
-    在项目根目录（`app.py` 所在目录）下运行：
+6.  **Run the Local Smart Assistant application:**
+    From the project root directory (where `app.py` is located), run:
     ```bash
     streamlit run app.py
     ```
-    您的默认网页浏览器将自动打开一个新标签页，显示“本地智慧助手”应用程序。
+    Your default web browser will automatically open a new tab, displaying the "Local Smart Assistant" application.
 
-## 💡 使用指南
+## 💡 Usage Guide
 
-*   **对话交流**：在底部的输入框中输入您的问题，点击“发送”或按回车键，模型将为您提供回答。
-*   **选择助手模式**：在左侧的侧边栏中，您可以选择不同的“助手模式”（如农业专家、医疗咨询等），以获得针对特定领域的专业回答。
-*   **知识库 (RAG)**：
-    *   点击侧边栏中的“上传您的知识文档 (TXT, MD, PDF)”，选择您希望模型学习的本地文档。
-    *   上传后，点击“处理上传文件”按钮。系统将处理文档并构建本地知识库。
-    *   **注意**：PDF 文件必须是包含可选择文本层的，扫描版图片PDF可能无法提取文本。
-    *   知识库构建完成后，模型在回答相关问题时将优先参考这些文档。
-    *   点击“清除知识库”按钮可以清空所有已上传文档的索引。
-*   **清空聊天记录**：点击侧边栏中的“清空聊天记录”按钮，可以开始新的对话。
-*   **调节生成温度**：通过侧边栏的滑块调节“生成温度”，控制模型回答的随机性或确定性。
+*   **Chat Interaction**: Enter your question in the input box at the bottom, click "Send" or press Enter, and the model will provide an answer.
+*   **Select Assistant Mode**: In the left sidebar, you can select different "Assistant Modes" (e.g., Agricultural Expert, Medical Consultation) to get professional answers tailored to specific domains.
+*   **Knowledge Base (RAG)**:
+    *   Click "Upload your knowledge documents (TXT, MD, PDF)" in the sidebar and select the local documents you want the model to learn from.
+    *   After uploading, click the "Process Uploaded Files" button. The system will process the documents and build a local knowledge base.
+    *   **Note**: PDF files must contain selectable text layers; scanned image PDFs may not allow text extraction.
+    *   Once the knowledge base is built, the model will prioritize referring to these documents when answering relevant questions.
+    *   Click the "Clear Knowledge Base" button to clear the index of all uploaded documents.
+*   **Clear Chat History**: Click the "Clear Chat History" button in the sidebar to start a new conversation.
+*   **Adjust Generation Temperature**: Use the slider in the sidebar to adjust the "Generation Temperature," controlling the randomness or determinism of the model's responses.
 
-## 📂 项目结构
+## 📂 Project Structure
 
 ```bash
 kaggle_competition/
-├── app.py # Streamlit 主应用程序代码
-├── requirements.txt # Python 依赖列表 (建议创建)
-├── README.md # 项目说明文件 (当前文件)
-├── chroma_db_rag/ # 持久化存储RAG知识库数据的文件夹 (自动生成)
-├── venv/ # Python 虚拟环境 (本地创建)
-├── .gitignore # Git 忽略文件 
+├── app.py # Main Streamlit application code
+├── requirements.txt # Python dependencies list (recommended to create)
+├── README.md # Project README file (this file)
+├── chroma_db_rag/ # Folder for persistently storing RAG knowledge base data (automatically generated)
+├── venv/ # Python virtual environment (locally created)
+├── .gitignore # Git ignore file
 ```
 
-## 🤝 贡献
+## 🤝 Contributions
 
-我们欢迎所有对离线 AI 和偏远地区技术赋能感兴趣的开发者加入！如果您有任何想法或建议，欢迎提交 Pull Request 或创建 Issue。
+We welcome all developers interested in offline AI and technology empowerment for remote areas to join! If you have any ideas or suggestions, feel free to submit a Pull Request or create an Issue.
 
-## 📜 许可证
+## 📜 License
 
-本项目采用 MIT 许可证。详见 `LICENSE` 文件。
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-## 🙏 致谢
+## 🙏 Acknowledgements
 
-*   [Kaggle](https://www.kaggle.com/) 和 [Google](https://about.google/) 举办的 Gemma 3n 黑客马拉松。
-*   [Ollama](https://ollama.com/) 团队为本地大模型服务做出的杰出贡献。
-*   [Streamlit](https://streamlit.io/) 团队提供的优秀 Web 应用框架。
-*   [LangChain](https://www.langchain.com/) 团队提供的强大 LLM 应用开发工具。
-*   [ChromaDB](https://www.trychroma.com/) 团队提供的易用向量数据库。
-*   所有开源社区的贡献者。
+*   [Kaggle](https://www.kaggle.com/) and [Google](https://about.google/) for hosting the Gemma 3n Hackathon.
+*   The [Ollama](https://ollama.com/) team for their outstanding contributions to local large language model services.
+*   The [Streamlit](https://streamlit.io/) team for providing an excellent web application framework.
+*   The [LangChain](https://www.langchain.com/) team for providing powerful tools for LLM application development.
+*   The [ChromaDB](https://www.trychroma.com/) team for providing an easy-to-use vector database.
+*   All contributors from the open-source community.
